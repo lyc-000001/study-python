@@ -1,13 +1,18 @@
 import os
 
-from flask import Flask
+from flask import Flask, request, jsonify
 from . import auth
 from . import blog
+from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request
+
+app = Flask(__name__, instance_relative_config=True)
 
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+
+    app.config["JWT_SECRET_KEY"] = "super-secret"
+    jwt = JWTManager(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -27,14 +32,22 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
     app.register_blueprint(auth.bp)
-    # app.register_blueprint(blog.bp)
-    # app.add_url_rule('/index', endpoint='home')
+    app.register_blueprint(blog.bp1)
 
     return app
 
 
+# 添加全局校验token
+@app.before_request
+def check_token():
+    # 登录路由或者其他不需要 token 的路由不做检查
+    if request.path in ['/auth/login']:
+        return
+
+    # 其余路由强制验证 token
+    try:
+        verify_jwt_in_request()
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 401

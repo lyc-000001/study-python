@@ -24,6 +24,9 @@ class User(Base):
 # session.add(new_user)
 # session.commit()
 # session.close()
+# new_user = User(user_name='Alice', user_password='25', nick_name='liyucai', roles='1')
+# session.add(new_user)
+# session.commit()
 
 # users = session.query(User).all()
 # for user in users:
