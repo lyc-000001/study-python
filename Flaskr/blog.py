@@ -3,7 +3,7 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-bp1 = Blueprint('blog', __name__, url_prefix='/blog')
+bp1 = Blueprint('blog', __name__, url_prefix='/api/blog')
 
 
 @bp1.route('/index')

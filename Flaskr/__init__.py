@@ -1,8 +1,8 @@
 import os
 
 from flask import Flask, request, jsonify
-from . import auth
-from . import blog
+from Flaskr import auth
+from Flaskr import blog
 from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request
 
 app = Flask(__name__, instance_relative_config=True)
@@ -15,14 +15,14 @@ def create_app(test_config=None):
     jwt = JWTManager(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'Flaskr.sqlite'),
     )
 
     if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
+        # load the instance Config, if it exists, when not testing
+        app.config.from_pyfile('Config.py', silent=True)
     else:
-        # load the test config if passed in
+        # load the test Config if passed in
         app.config.from_mapping(test_config)
 
     # ensure the instance folder exists
@@ -43,7 +43,7 @@ def create_app(test_config=None):
 @app.before_request
 def check_token():
     # 登录路由或者其他不需要 token 的路由不做检查
-    if request.path in ['/auth/login']:
+    if request.path in ['/api/auth/login']:
         return
 
     # 其余路由强制验证 token

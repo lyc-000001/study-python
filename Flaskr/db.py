@@ -2,7 +2,7 @@ import sqlalchemy
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, create_engine, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from db_link_test import engine, session
+from Flaskr.db_link_test import engine, session
 
 Base = sqlalchemy.orm.declarative_base()
 
@@ -31,3 +31,5 @@ class User(Base):
 # users = session.query(User).all()
 # for user in users:
 #     print(user.name, user.age)
+def test1():
+    pass
