@@ -13,10 +13,10 @@ def index1():
 
 @bp1.route('/test')
 def test():
-    return f'hello {url_for("home")}'
+    return 'hello'
 
 
 @bp1.route('/about')
 def about():
     # 使用 endpoint 'home' 动态生成 URL
-    return f'Go to homepage: {url_for("home")}'
+    return 'Go to homepage'

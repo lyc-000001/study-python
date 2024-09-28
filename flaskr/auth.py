@@ -18,7 +18,7 @@ def register():
 @bp.route("/login", methods=["POST"])
 def login():
     access_token = create_access_token(identity=request.form.get('username'))
-    response = jsonify({"msg": "login successful", 'access_token': access_token, 'code': f'hello {url_for("home")}'})
+    response = jsonify({"msg": "login successful", 'access_token': access_token, 'code': '200'})
     return response
 
 
